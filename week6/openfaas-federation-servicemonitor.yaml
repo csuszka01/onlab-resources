@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: openfaas-federation
+  namespace: monitoring
+  labels:
+    # IMPORTANT: This label must match your Helm release name
+    release: monitoring 
+spec:
+  jobLabel: federate
+  namespaceSelector:
+    matchNames:
+      - openfaas
+  selector:
+    matchLabels:
+      component: prometheus
+  endpoints:
+  - targetPort: 9090
+    path: /federate
+    interval: 2s
+    honorLabels: true  # As per Prometheus Federation docs
+    params:
+      'match[]':
+        - '{job="gateway"}'
+        - '{job="kubernetes-pods"}'
+        - '{__name__=~"gateway_.*"}'
