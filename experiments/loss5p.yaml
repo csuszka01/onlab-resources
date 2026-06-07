@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: openfaas-loss-5
+  namespace: chaos-mesh
+spec:
+  action: loss
+  mode: all
+  selector:
+    labelSelectors:
+      'faas_function': 'figlet'
+    namespaces:
+      - openfaas-fn
+  loss:
+    loss: '5'
+    correlation: '0'
+  duration: '2m'

@@ -1,0 +1,14 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: openfaas-kill
+  namespace: chaos-mesh
+spec:
+  action: pod-kill
+  mode: all
+  gracePeriod: 5
+  selector:
+    labelSelectors:
+      'faas_function': 'figlet'
+    namespaces:
+      - openfaas-fn

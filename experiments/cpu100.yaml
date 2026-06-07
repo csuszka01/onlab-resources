@@ -1,0 +1,17 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata:
+  name: openfaas-cpu-100
+  namespace: chaos-mesh
+spec:
+  mode: all
+  selector:
+    namespaces:
+      - openfaas-fn
+    labelSelectors:
+      'faas_function': 'figlet'
+  stressors:
+    cpu:
+      workers: 5    # cpu cores
+      load: 100     # cpu load
+  duration: '2m'

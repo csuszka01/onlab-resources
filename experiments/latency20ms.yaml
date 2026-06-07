@@ -1,0 +1,18 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: openfaas-latency-20
+  namespace: chaos-mesh
+spec:
+  action: delay
+  mode: all
+  selector:
+    labelSelectors:
+      'faas_function': 'figlet'
+    namespaces:
+      - openfaas-fn
+  delay:
+    latency: '20ms'
+    correlation: '0'
+    jitter: '10ms'
+  duration: '2m'
