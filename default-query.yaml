@@ -1,0 +1,4 @@
+replica_count: gateway_service_count
+invoke_rate: irate(gateway_function_invocation_total[1m])
+response_time: sum by (function_name) (irate(gateway_functions_seconds_sum[1m])) / sum by (function_name) (irate(gateway_functions_seconds_count[1m]))
+cpu_usage: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)
